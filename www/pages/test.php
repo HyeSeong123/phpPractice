@@ -13,8 +13,8 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 		let formSend = false;
 		let frm = document.getElementById("memberInfor");
 
-		if ( frm.team_name.value.trim().length <= 0 ){
-			alert('팀명을 입력해주세요.');
+		if ( frm.team_name.value.trim().length <= 2 ){
+			alert('팀명은 세 글자 이상이어야 합니다.');
 			frm.team_name.focus();
 			return;
 		} else if ( frm.attend_area.value.trim().length <= 0 ){
@@ -36,9 +36,9 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 			alert('대표자 주소지를 입력해주세요.');
 			frm.leader_address.focus();
 			return;
-		} else if ( frm.leader_postcode.value.trim().length <= 0 ){
+		} else if ( frm.leader_address_detail.value.trim().length <= 0 ){
 			alert('대표자 상세주소를 입력해주세요.');
-			frm.leader_address.focus();
+			frm.leader_address_detail.focus();
 			return;
 		} else if ( frm.member1_name.value.trim().length <= 0 || frm.member1_ph.value.trim().length <= 0){
 		 	alert('팀 구성원 첫번째 칸이 비었습니다.');
