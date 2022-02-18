@@ -1,5 +1,7 @@
 <?php
     include_once('./_common.php'); 
+	error_reporting(E_ALL);
+	ini_set("display_errors", 1);
 
     $team_name = $_POST['team_name'];
     $attend_area = $_POST['attend_area'];
@@ -49,19 +51,101 @@
         echo '<script>alert(\'팀 구성원 네번째 칸이 비었습니다.\'); location.href=\'./test.php\';</script>';
     }
 
-    $sql = "insert into `yutentry`
+	$sql_select = "
+	SELECT id,
+	regDate,
+	team_name,
+	attend_area,
+	leader_name,
+	leader_ph,
+	leader_postcode,
+	leader_address,
+	leader_address_detail,
+	team_member1_name,
+	team_member1_ph,
+	team_member2_name,
+	team_member2_ph,
+	team_member3_name,
+	team_member3_ph,
+	team_member4_name,
+	team_member4_ph,
+	entry_status
+	FROM yutentry;
+	";
+
+	$result = sql_fetch($sql_select);
+
+	if( $result['team_name'] == $team_name ){
+		echo
+		"	
+			<script>
+				alert(\"같은 이름의 팀이 존재합니다. 다른 팀명을 사용해주세요.\");
+				location.href=\"./test.php\";
+			</script>
+		";
+	}
+
+	if( $result['leader_name'] == $leader_name && $result['leader_ph'] == $leader_ph){
+		echo
+		"	
+			<script>
+				alert(\"$leader_name 님이 이미 신청되었습니다.\");
+				location.href=\"./test.php\";
+			</script>
+		";
+	}
+
+	if( $result['team_member1_name'] == $team_member1_name && $result['team_member1_ph'] == $team_member1_ph){
+		echo
+		"	
+			<script>
+				alert(\"$team_member1_name 님이 이미 신청되었습니다.\");
+				location.href=\"./test.php\";
+			</script>
+		";
+	} else if( $result['team_member2_name'] == $team_member2_name && $result['team_member2_ph'] == $team_member2_ph){
+		echo
+		"	
+			<script>
+				alert(\"$team_member2_name 님이 이미 신청되었습니다.\");
+				location.href=\"./test.php\";
+			</script>
+		";
+	} else if( $result['team_member3_name'] == $team_member3_name && $result['team_member3_ph'] == $team_member3_ph){
+		echo
+		"	
+			<script>
+				alert(\"$team_member3_name 님이 이미 신청되었습니다.\");
+				location.href=\"./test.php\";
+			</script>
+		";
+	} else if( $result['team_member4_name'] == $team_member4_name && $result['team_member4_ph'] == $team_member4_ph){
+		echo
+		"	
+			<script>
+				alert(\"$team_member4_name 님이 이미 신청되었습니다.\");
+				location.href=\"./test.php\";
+			</script>
+		";
+	}
+	
+    $sql_insert = "insert into `yutentry`
             (id, regDate , team_name, attend_area , leader_name ,
             leader_ph, leader_postcode, leader_address, leader_address_detail,
             team_member1_name, team_member1_ph, team_member2_name, team_member2_ph,
-            team_member3_name, team_member3_ph, team_member4_name, team_member4_ph, entryStatus) VALUES
+            team_member3_name, team_member3_ph, team_member4_name, team_member4_ph, entry_status) VALUES
             ('0', NOW(), '$team_name', '$attend_area', '$leader_name',
             '$leader_ph', '$leader_postcode', '$leader_address', '$leader_address_detail',
             '$team_member1_name', '$team_member1_ph', '$team_member2_name', '$team_member2_ph',
             '$team_member3_name', '$team_member3_ph', '$team_member4_name', '$team_member4_ph', default)";
 
-    sql_query($sql);
+    sql_query($sql_insert);
+	
+	echo
+	"
+	<script>
+		alert(\"신청이 완료되었습니다.\");
+		location.href=\"./test.php\";
+	</script>	
+	";
 ?>
-<script>
-console.log(<?php echo $sql ?>)
-</script>
-<div>내용 : <?php echo $sql ?> </div>

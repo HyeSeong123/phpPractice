@@ -13,7 +13,7 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 		let formSend = false;
 		let frm = document.getElementById("memberInfor");
 
-		if ( frm.team_name.value.trim().length <= 2 ){
+		if ( frm.team_name.value.trim().length < 2 ){
 			alert('팀명은 세 글자 이상이어야 합니다.');
 			frm.team_name.focus();
 			return;
